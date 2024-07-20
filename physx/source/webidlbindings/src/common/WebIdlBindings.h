@@ -268,8 +268,8 @@ struct PxTopLevelFunctions {
         return PxCreateFoundation(version, allocator, errorCallback);
     }
 
-    static physx::PxPhysics *CreatePhysics(physx::PxU32 version, physx::PxFoundation &foundation, const physx::PxTolerancesScale &scale, physx::PxPvd* pvd = NULL, physx::PxOmniPvd* omniPvd = NULL) {
-        return PxCreatePhysics(version, foundation, scale, false, pvd, omniPvd);
+    static physx::PxPhysics *CreatePhysics(physx::PxU32 version, physx::PxFoundation &foundation, const physx::PxTolerancesScale &scale, bool trackOutstandingAllocations = false, physx::PxPvd* pvd = NULL, physx::PxOmniPvd* omniPvd = NULL) {
+        return PxCreatePhysics(version, foundation, scale, trackOutstandingAllocations, pvd, omniPvd);
     }
 
     static physx::PxControllerManager* CreateControllerManager(physx::PxScene& scene, bool lockingEnabled = false) {
@@ -294,8 +294,8 @@ struct PxTopLevelFunctions {
         return physx::PxDefaultCpuDispatcherCreate(numThreads);
     }
 
-    static bool InitExtensions(physx::PxPhysics& physics) {
-        return PxInitExtensions(physics, NULL);
+    static bool InitExtensions(physx::PxPhysics& physics, physx::PxPvd* pvd = NULL) {
+        return PxInitExtensions(physics, pvd);
     }
 
     static void CloseExtensions() {
