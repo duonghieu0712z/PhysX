@@ -127,10 +127,6 @@ class CMakePreset:
             return False
         elif self.targetPlatform == 'linuxAarch64':
             return False
-        elif self.targetPlatform == 'jni-linux':
-            return False
-        elif self.targetPlatform == 'jni-android':
-            return False
         elif self.targetPlatform == 'emscripten':
             return False
         return True
@@ -179,9 +175,6 @@ class CMakePreset:
         # mac
         elif self.compiler == 'xcode':
             outString = outString + '-G Xcode'
-        # jni android
-        elif self.targetPlatform == 'jni-android':
-            outString = outString + '-G \"Unix Makefiles\"'
         # Linux
         elif self.targetPlatform in ['linux', 'linuxAarch64']:
             if self.generator is not None and self.generator == 'ninja':
@@ -235,41 +228,6 @@ class CMakePreset:
         elif self.targetPlatform == 'mac64':
             outString = outString + ' -DTARGET_BUILD_PLATFORM=mac'
             outString = outString + ' -DPX_OUTPUT_ARCH=x86'
-            return outString
-        elif self.targetPlatform == 'jni-mac64':
-            outString = outString + ' -DTARGET_BUILD_PLATFORM=jni-mac'
-            outString = outString + ' -DPX_OUTPUT_ARCH=x86'
-            return outString
-        elif self.targetPlatform == 'jni-macAarch64':
-            outString = outString + ' -DTARGET_BUILD_PLATFORM=jni-mac'
-            outString = outString + ' -DPX_OUTPUT_ARCH=arm'
-            return outString
-        elif self.targetPlatform == 'jni-win64':
-            outString = outString + ' -Ax64'
-            outString = outString + ' -DTARGET_BUILD_PLATFORM=jni-windows'
-            outString = outString + ' -DPX_OUTPUT_ARCH=x86'
-            return outString
-        elif self.targetPlatform == 'jni-linux':
-            outString = outString + ' -DTARGET_BUILD_PLATFORM=jni-linux'
-            outString = outString + ' -DPX_OUTPUT_ARCH=x86'
-            outString = outString + ' -DCMAKE_C_COMPILER=clang'
-            outString = outString + ' -DCMAKE_CXX_COMPILER=clang++'
-            return outString
-        elif self.targetPlatform == 'jni-android':
-            outString = outString + ' -DTARGET_BUILD_PLATFORM=jni-android'
-            if os.environ.get('ANDROID_NDK_HOME') is None:
-                print('Please provide path to android NDK in environment variable ANDROID_NDK_HOME.')
-                exit(-1)
-            else:
-                outString = outString + ' -DCMAKE_TOOLCHAIN_FILE=' + \
-                    os.environ['ANDROID_NDK_HOME'] + \
-                    '/build/cmake/android.toolchain.cmake'
-                outString = outString + ' -DANDROID_STL=\"c++_static\"'
-                outString = outString + ' -DCM_ANDROID_FP=\"softfp\"'
-                outString = outString + ' -DANDROID_NDK=' + \
-                    os.environ['ANDROID_NDK_HOME']
-                outString = outString + ' -DCMAKE_MAKE_PROGRAM=\"' + \
-                    os.environ['ANDROID_NDK_HOME'] + '/prebuilt/linux-x86_64/bin/make\"'
             return outString
         elif self.targetPlatform == 'emscripten':
             outString = outString + ' -DTARGET_BUILD_PLATFORM=emscripten'
