@@ -393,9 +393,9 @@ class PassThroughFilterShaderImpl : PassThroughFilterShader {
         jmethodID filterShaderMethodId;
 };
 
-class SimplPvdTransportImpl : SimplePvdTransport {
+class SimplePvdTransportImpl : SimplePvdTransport {
     public:
-        SimplPvdTransportImpl(JNIEnv* env, jobject javaLocalRef) {
+        SimplePvdTransportImpl(JNIEnv* env, jobject javaLocalRef) {
             javaGlobalRef = env->NewGlobalRef(javaLocalRef);
             jclass javaClass = env->GetObjectClass(javaLocalRef);
             connectMethodId = env->GetMethodID(javaClass, "_connect", "()Z");
@@ -405,7 +405,7 @@ class SimplPvdTransportImpl : SimplePvdTransport {
             flushMethodId = env->GetMethodID(javaClass, "_flush", "()V");
         }
         
-        ~SimplPvdTransportImpl() {
+        ~SimplePvdTransportImpl() {
             jniThreadEnv.getEnv()->DeleteGlobalRef(javaGlobalRef);
         }
         
@@ -14947,15 +14947,15 @@ JNIEXPORT void JNICALL Java_physx_support_SimplePvdTransport__1delete_1native_1i
     delete (SimplePvdTransport*) _address;
 }
 
-// SimplPvdTransportImpl
-JNIEXPORT jint JNICALL Java_physx_support_SimplPvdTransportImpl__1_1sizeOf(JNIEnv*, jclass) {
-    return sizeof(SimplPvdTransportImpl);
+// SimplePvdTransportImpl
+JNIEXPORT jint JNICALL Java_physx_support_SimplePvdTransportImpl__1_1sizeOf(JNIEnv*, jclass) {
+    return sizeof(SimplePvdTransportImpl);
 }
-JNIEXPORT jlong JNICALL Java_physx_support_SimplPvdTransportImpl__1SimplPvdTransportImpl(JNIEnv* env, jobject obj) {
-    return (jlong) new SimplPvdTransportImpl(env, obj);
+JNIEXPORT jlong JNICALL Java_physx_support_SimplePvdTransportImpl__1SimplePvdTransportImpl(JNIEnv* env, jobject obj) {
+    return (jlong) new SimplePvdTransportImpl(env, obj);
 }
-JNIEXPORT void JNICALL Java_physx_support_SimplPvdTransportImpl__1delete_1native_1instance(JNIEnv*, jclass, jlong address) {
-    delete (SimplPvdTransportImpl*) address;
+JNIEXPORT void JNICALL Java_physx_support_SimplePvdTransportImpl__1delete_1native_1instance(JNIEnv*, jclass, jlong address) {
+    delete (SimplePvdTransportImpl*) address;
 }
 
 // PxPvdInstrumentationFlags

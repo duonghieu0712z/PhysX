@@ -3614,8 +3614,8 @@ interface PxVehicleWheelsPtr {
 };
 
 [JSImplementation="SimplePvdTransport"]
-interface SimplPvdTransportImpl {
-    void SimplPvdTransportImpl();
+interface SimplePvdTransportImpl {
+    void SimplePvdTransportImpl();
     boolean connect();
     boolean isConnected();
     void disconnect();
