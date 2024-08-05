@@ -2,4 +2,5 @@ bin/
 compiler/linux-*
 compiler/vc*
 compiler/android*
+compiler/emscripten-*
 include/PxConfig.h
