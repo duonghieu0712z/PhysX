@@ -1245,6 +1245,39 @@ interface PxCpuDispatcher {
 };
 
 [Prefix="physx::"]
+interface PxCustomGeometry {
+    void PxCustomGeometry([Ref] PxCustomGeometryCallbacks callbacks);
+};
+PxCustomGeometry implements PxGeometry;
+
+interface PxCustomGeometryCallbacks {
+};
+
+[Prefix="physx::"]
+interface PxCustomGeometryExtConeCallbacks {
+    void PxCustomGeometryExtConeCallbacks(float height, float radius, optional long axis);
+    void setHeight(float height);
+    float getHeight();
+    void setRadius(float radius);
+    float getRadius();
+    void setAxis(long axis);
+    long getAxis();
+};
+PxCustomGeometryExtConeCallbacks implements PxCustomGeometryCallbacks;
+
+[Prefix="physx::"]
+interface PxCustomGeometryExtCylinderCallbacks {
+    void PxCustomGeometryExtCylinderCallbacks(float height, float radius, optional long axis);
+    void setHeight(float height);
+    float getHeight();
+    void setRadius(float radius);
+    float getRadius();
+    void setAxis(long axis);
+    long getAxis();
+};
+PxCustomGeometryExtCylinderCallbacks implements PxCustomGeometryCallbacks;
+
+[Prefix="physx::"]
 interface PxD6Joint {
     void setMotion(PxD6AxisEnum axis, PxD6MotionEnum type);
     PxD6MotionEnum getMotion(PxD6AxisEnum axis);

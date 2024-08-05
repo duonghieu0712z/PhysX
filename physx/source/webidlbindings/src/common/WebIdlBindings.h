@@ -248,6 +248,8 @@ typedef PxHitResult<physx::PxOverlapHit> PxOverlapResult;
 typedef PxHitResult<physx::PxRaycastHit> PxRaycastResult;
 typedef PxHitResult<physx::PxSweepHit> PxSweepResult;
 
+typedef physx::PxCustomGeometry::Callbacks PxCustomGeometryCallbacks;
+
 // top-level functions are not supported by webidl binder, we need to wrap them in a class
 struct PxTopLevelFunctions {
     static const physx::PxU32 PHYSICS_VERSION = PX_PHYSICS_VERSION;
