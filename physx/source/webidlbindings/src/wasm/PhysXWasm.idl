@@ -1247,6 +1247,7 @@ interface PxCpuDispatcher {
 [Prefix="physx::"]
 interface PxCustomGeometry {
     void PxCustomGeometry([Ref] PxCustomGeometryCallbacks callbacks);
+    attribute PxCustomGeometryCallbacks callbacks;
 };
 PxCustomGeometry implements PxGeometry;
 
