@@ -37,6 +37,8 @@ interface ExtensionFunctions {
     static PxMaterial PxPhysics_getMaterial([Const, Ref] PxPhysics physics, unsigned long index);
     static PxShape PxRigidActor_getShape([Const, Ref] PxRigidActor actor, unsigned long index);
     static PxConstraint PxRigidActor_getConstraint([Const, Ref] PxRigidActor actor, unsigned long index);
+    static void PxRigidBody_applyGlobalForce([Ref] PxRigidBody body, [Const, Ref] PxVec3 force, PxForceModeEnum mode, [Const, Ref] PxVec3 point);
+    static void PxRigidBody_applyLocalForce([Ref] PxRigidBody body, [Const, Ref] PxVec3 force, PxForceModeEnum mode, [Const, Ref] PxVec3 point);
     [Value] static PxTransform PxRigidDynamic_getKinematicTarget([Const, Ref] PxRigidDynamic actor);
     static PxActor PxScene_getActor([Const, Ref] PxScene scene, [Ref] PxActorTypeFlags types, unsigned long index);
     static PxArticulationReducedCoordinate PxScene_getArticulation([Const, Ref] PxScene scene, unsigned long index);

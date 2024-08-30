@@ -272,20 +272,6 @@ struct ExtensionFunctions
         return tendon;
     }
 
-    static PxU32 PxArticulationReducedCoordinate_getPosIter(const PxArticulationReducedCoordinate &articulation)
-    {
-        PxU32 posIter, velIter;
-        articulation.getSolverIterationCounts(posIter, velIter);
-        return posIter;
-    }
-
-    static PxU32 PxArticulationReducedCoordinate_getVelIter(const PxArticulationReducedCoordinate &articulation)
-    {
-        PxU32 posIter, velIter;
-        articulation.getSolverIterationCounts(posIter, velIter);
-        return velIter;
-    }
-
     static PxArticulationAttachment *PxArticulationSpatialTendon_getAttachment(const PxArticulationSpatialTendon &tendon, PxU32 index)
     {
         PxArticulationAttachment *attachment;
@@ -412,25 +398,41 @@ struct ExtensionFunctions
         return constraint;
     }
 
+    static void PxRigidBody_applyGlobalForce(PxRigidBody &body, const PxVec3 &force, PxForceMode::Enum mode, const PxVec3 &point)
+    {
+        if (!force.isZero())
+        {
+            body.addForce(force, mode);
+            PxVec3 torque = point.cross(force);
+            if (!torque.isZero())
+            {
+                body.addTorque(torque, mode);
+            }
+        }
+    }
+
+    static void PxRigidBody_applyLocalForce(PxRigidBody &body, const PxVec3 &force, PxForceMode::Enum mode, const PxVec3 &point)
+    {
+        if (!force.isZero())
+        {
+            PxTransform pose = body.getGlobalPose();
+            PxVec3 worldForce = pose.rotate(force);
+            body.addForce(worldForce, mode);
+
+            PxVec3 worldPoint = pose.rotate(point);
+            PxVec3 torque = worldPoint.cross(worldForce);
+            if (!torque.isZero())
+            {
+                body.addTorque(torque, mode);
+            }
+        }
+    }
+
     static PxTransform PxRigidDynamic_getKinematicTarget(const PxRigidDynamic &actor)
     {
         PxTransform target;
         actor.getKinematicTarget(target);
         return target;
-    }
-
-    static PxU32 PxRigidDynamic_getPosIter(const PxRigidDynamic &actor)
-    {
-        PxU32 posIter, velIter;
-        actor.getSolverIterationCounts(posIter, velIter);
-        return posIter;
-    }
-
-    static PxU32 PxRigidDynamic_getVelIter(const PxRigidDynamic &actor)
-    {
-        PxU32 posIter, velIter;
-        actor.getSolverIterationCounts(posIter, velIter);
-        return velIter;
     }
 
     static PxActor *PxScene_getActor(const PxScene &scene, PxActorTypeFlags types, PxU32 index)
