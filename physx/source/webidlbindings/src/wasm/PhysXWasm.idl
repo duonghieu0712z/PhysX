@@ -2447,12 +2447,9 @@ interface TopLevelFunctions {
     static PxPrismaticJoint CreatePrismaticJoint([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
     static PxRevoluteJoint CreateRevoluteJoint([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
     static PxSphericalJoint CreateSphericalJoint([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-    [Value] static PxConvexMeshDesc CreateConvexMeshDesc([Const, Ref] Vector_PxVec3 points);
-    static PxConvexMesh CreateConvexMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxConvexMeshDesc desc);
-    [Value] static PxTriangleMeshDesc CreateTriangleMeshDesc([Const, Ref] Vector_PxVec3 points, [Const, Ref] Vector_PxU16 triangles);
-    static PxTriangleMesh CreateTriangleMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxTriangleMeshDesc desc);
-    [Value] static PxHeightFieldDesc CreateHeightFieldDesc(unsigned long nbColumns, unsigned long nbRows, [Const, Ref] Vector_PxHeightFieldSample samples);
-    static PxHeightField CreateHeightField([Const, Ref] PxHeightFieldDesc desc);
+    static PxConvexMesh CreateConvexMesh([Const, Ref] PxCookingParams params, [Const, Ref] Vector_PxVec3 points);
+    static PxTriangleMesh CreateTriangleMesh([Const, Ref] PxCookingParams params, [Const, Ref] Vector_PxVec3 points, [Const, Ref] Vector_PxU16 triangles);
+    static PxHeightField CreateHeightField(unsigned long nbColumns, unsigned long nbRows, [Const, Ref] Vector_PxHeightFieldSample samples);
     static PxRigidStatic CreatePlane([Ref] PxPhysics physics, [Const, Ref] PxPlane plane, [Ref] PxMaterial material, [Ref] PxShapeFlags shapeFlags, [Const, Ref] PxFilterData filterData);
     static readonly attribute unsigned long PHYSICS_VERSION;
 };
@@ -2465,6 +2462,7 @@ interface Vector_PxContactPairPoint {
     [Const] PxContactPairPoint data();
     [Ref] PxContactPairPoint pushBack([Const, Ref] PxContactPairPoint value);
     void resize(unsigned long size, [Const, Ref] optional PxContactPairPoint value);
+    unsigned long size();
     void clear();
 };
 
@@ -2476,6 +2474,7 @@ interface Vector_PxHeightFieldSample {
     [Const] PxHeightFieldSample data();
     [Ref] PxHeightFieldSample pushBack([Const, Ref] PxHeightFieldSample value);
     void resize(unsigned long size, [Const, Ref] optional PxHeightFieldSample value);
+    unsigned long size();
     void clear();
 };
 
@@ -2487,6 +2486,7 @@ interface Vector_PxRaycastHit {
     [Const] PxRaycastHit data();
     [Ref] PxRaycastHit pushBack([Const, Ref] PxRaycastHit value);
     void resize(unsigned long size, [Const, Ref] optional PxRaycastHit value);
+    unsigned long size();
     void clear();
 };
 
@@ -2498,6 +2498,7 @@ interface Vector_PxSweepHit {
     [Const] PxSweepHit data();
     [Ref] PxSweepHit pushBack([Const, Ref] PxSweepHit value);
     void resize(unsigned long size, [Const, Ref] optional PxSweepHit value);
+    unsigned long size();
     void clear();
 };
 
@@ -2509,6 +2510,7 @@ interface Vector_PxVec3 {
     [Const] PxVec3 data();
     [Ref] PxVec3 pushBack([Const, Ref] PxVec3 value);
     void resize(unsigned long size, [Const, Ref] optional PxVec3 value);
+    unsigned long size();
     void clear();
 };
 
@@ -2520,5 +2522,6 @@ interface Vector_PxU16 {
     [Const] VoidPtr data();
     unsigned short pushBack(unsigned short value);
     void resize(unsigned long size, optional unsigned short value);
+    unsigned long size();
     void clear();
 };

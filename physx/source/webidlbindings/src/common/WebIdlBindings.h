@@ -175,22 +175,17 @@ struct TopLevelFunctions
 
     // Create meshes
 
-    static PxConvexMeshDesc CreateConvexMeshDesc(const Vector_PxVec3 &points)
+    static PxConvexMesh *CreateConvexMesh(const PxCookingParams &params, const Vector_PxVec3 &points)
     {
         PxConvexMeshDesc desc;
         desc.points.count = points.size();
         desc.points.stride = sizeof(PxVec3);
         desc.points.data = points.data();
         desc.flags = PxConvexFlag::eCOMPUTE_CONVEX;
-        return desc;
-    }
-
-    static PxConvexMesh *CreateConvexMesh(const PxCookingParams &params, const PxConvexMeshDesc &desc)
-    {
         return PxCreateConvexMesh(params, desc);
     }
 
-    static PxTriangleMeshDesc CreateTriangleMeshDesc(const Vector_PxVec3 &points, const Vector_PxU16 &triangles)
+    static PxTriangleMesh *CreateTriangleMesh(const PxCookingParams &params, const Vector_PxVec3 &points, const Vector_PxU16 &triangles)
     {
         PxTriangleMeshDesc desc;
         desc.points.count = points.size();
@@ -200,26 +195,16 @@ struct TopLevelFunctions
         desc.triangles.stride = 3 * sizeof(PxU16);
         desc.triangles.data = triangles.data();
         desc.flags = PxMeshFlag::e16_BIT_INDICES;
-        return desc;
-    }
-
-    static PxTriangleMesh *CreateTriangleMesh(const PxCookingParams &params, const PxTriangleMeshDesc &desc)
-    {
         return PxCreateTriangleMesh(params, desc);
     }
 
-    static PxHeightFieldDesc CreateHeightFieldDesc(PxU32 nbColumns, PxU32 nbRows, const Vector_PxHeightFieldSample &samples)
+    static PxHeightField *CreateHeightField(PxU32 nbColumns, PxU32 nbRows, const Vector_PxHeightFieldSample &samples)
     {
         PxHeightFieldDesc desc;
         desc.nbColumns = nbColumns;
         desc.nbRows = nbRows;
         desc.samples.data = samples.data();
         desc.samples.stride = sizeof(PxHeightFieldSample);
-        return desc;
-    }
-
-    static PxHeightField *CreateHeightField(const PxHeightFieldDesc &desc)
-    {
         return PxCreateHeightField(desc);
     }
 
