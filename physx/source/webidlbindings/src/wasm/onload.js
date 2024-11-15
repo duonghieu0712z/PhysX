@@ -40,6 +40,9 @@ for (const prop in Module.ArrayHelpers.prototype) {
   }
 }
 
+Module['malloc'] = Module['_webidl_malloc'] = _webidl_malloc;
+Module['free'] = Module['_webidl_free'] = _webidl_free;
+
 function deleteCache(obj) {
   delete Module.getCache(obj.__class__)[obj.ptr];
 }
