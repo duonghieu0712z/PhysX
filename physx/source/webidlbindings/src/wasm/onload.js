@@ -43,14 +43,33 @@ for (const prop in Module.ArrayHelpers.prototype) {
 Module['malloc'] = Module['_webidl_malloc'] = _webidl_malloc;
 Module['free'] = Module['_webidl_free'] = _webidl_free;
 
-function deleteCache(obj) {
-  delete Module.getCache(obj.__class__)[obj.ptr];
+function deleteCache(obj, recursive = false) {
+  const caches = Module['getCache'](obj.__class__);
+  if (!caches[obj.ptr]) {
+    return;
+  }
+  delete caches[obj.ptr];
+
+  if (recursive) {
+    for (const prop in obj) {
+      if (prop.startsWith('get_') && prop !== 'get_userData') {
+        const value = obj[prop]();
+        if (typeof value === 'object') {
+          deleteCache(value, true);
+        }
+      }
+    }
+  }
 }
 Module['deleteCache'] = deleteCache;
 
 function release(obj) {
-  if (!obj.release) return Module.destroy(obj);
-  obj.release();
-  deleteCache(obj);
+  if (!obj['release']) {
+    Module['destroy'](obj);
+    return;
+  }
+
+  obj['release']();
+  Module['deleteCache'](obj);
 }
 Module['release'] = release;
