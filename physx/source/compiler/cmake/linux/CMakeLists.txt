@@ -70,6 +70,10 @@ SET(CLANG_WARNINGS "-ferror-limit=0 -Wall -Wextra -Werror -Wstrict-aliasing=2 -W
     -Wno-zero-as-null-pointer-constant \
     -Wno-reserved-identifier \
     -Wno-undefined-func-template \
+    -Wno-unsafe-buffer-usage \
+    -Wno-invalid-offsetof \
+    -Wno-switch-default \
+    -Wno-unused-but-set-variable \
 ")
 
 
