@@ -128,10 +128,10 @@ ELSEIF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 ENDIF()
 
 # Build debug info for all configurations
-SET(PHYSX_CXX_FLAGS_DEBUG   "-O0 -msimd128 -g3 -gdwarf-2" CACHE INTERNAL "PhysX Debug CXX Flags")
-SET(PHYSX_CXX_FLAGS_CHECKED "-O3 -msimd128 -g3 -gdwarf-2" CACHE INTERNAL "PhysX Checked CXX Flags")
-SET(PHYSX_CXX_FLAGS_PROFILE "-O3 -msimd128" CACHE INTERNAL "PhysX Profile CXX Flags")
-SET(PHYSX_CXX_FLAGS_RELEASE "-O3 -msimd128 ${PHYSX_WASM_PTHREAD_PX_FLAGS}" CACHE INTERNAL "PhysX Release CXX Flags")
+SET(PHYSX_CXX_FLAGS_DEBUG   "-O0 -g3 -gdwarf-2" CACHE INTERNAL "PhysX Debug CXX Flags")
+SET(PHYSX_CXX_FLAGS_CHECKED "-O3 -g3 -gdwarf-2" CACHE INTERNAL "PhysX Checked CXX Flags")
+SET(PHYSX_CXX_FLAGS_PROFILE "-O3" CACHE INTERNAL "PhysX Profile CXX Flags")
+SET(PHYSX_CXX_FLAGS_RELEASE "-O3 ${PHYSX_WASM_PTHREAD_PX_FLAGS}" CACHE INTERNAL "PhysX Release CXX Flags")
 
 # These flags are local to the directory the CMakeLists.txt is in, so don't get carried over to OTHER CMakeLists.txt (thus the CACHE variables above)
 SET(CMAKE_CXX_FLAGS ${PHYSX_CXX_FLAGS})
