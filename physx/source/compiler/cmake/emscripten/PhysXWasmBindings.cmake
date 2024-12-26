@@ -14,9 +14,10 @@ SET(PHYSX_WASM_SOURCE_DIR ${PHYSX_SOURCE_DIR}/webidlbindings/src)
 SET(PHYSXWASM_INCLUDE_DIR ${PHYSX_ROOT_DIR}/include)
 SET(PHYSXWASM_GLUE_WRAPPER ${PHYSX_WASM_SOURCE_DIR}/wasm/PhysXWasm.cpp)
 SET(PHYSXWASM_IDL_FILE ${PHYSX_WASM_SOURCE_DIR}/wasm/PhysXWasm.idl)
-SET(EMCC_WASM_ARGS
+SET(EMCC_ARGS
 		--post-js glue.js
 		--post-js ${PHYSX_WASM_SOURCE_DIR}/wasm/onload.js
+		-O3
 		-s MODULARIZE=1
 		-s EXPORT_NAME=PhysX
 		-s ENVIRONMENT=web,worker
@@ -27,10 +28,17 @@ SET(EMCC_WASM_ARGS
 		# -s INITIAL_MEMORY=268435456
 		-s STACK_OVERFLOW_CHECK=2
 		-s STACK_SIZE=1048576
-		# -s WASM=0
 		${WASM_EXPORTED_FUNCTIONS}
 		${PHYSX_WASM_PTHREAD}
 		${PHYSX_WASM_THREAD_POOL_SZ}
+)
+
+SET(EMCC_WASM_ARGS ${EMCC_ARGS}
+		-s WASM=1
+)
+
+SET(EMCC_JS_ARGS ${EMCC_ARGS}
+		-s WASM=0
 )
 
 SET(EMCC_GLUE_ARGS
@@ -73,3 +81,12 @@ ADD_CUSTOM_COMMAND(
 		VERBATIM
 )
 ADD_CUSTOM_TARGET(PhysXWasmBindings ALL DEPENDS physx-js-webidl.js physx-js-webidl.wasm)
+
+ADD_CUSTOM_COMMAND(
+		OUTPUT physx-js-webidl.asm.js
+		COMMAND emcc glue.o ${PHYSX_LIBS} ${EMCC_JS_ARGS} -o physx-js-webidl.asm.js
+		DEPENDS physx-js-bindings ${PHYSX_TARGETS}
+		COMMENT "Building physx-js-webidl asm.js"
+		VERBATIM
+)
+ADD_CUSTOM_TARGET(PhysXWasmBindingsAsm ALL DEPENDS physx-js-webidl.asm.js)
