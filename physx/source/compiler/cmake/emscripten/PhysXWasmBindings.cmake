@@ -38,6 +38,7 @@ SET(EMCC_WASM_ARGS ${EMCC_ARGS}
 )
 
 SET(EMCC_JS_ARGS ${EMCC_ARGS}
+		-s SINGLE_FILE=1
 		-s WASM=0
 )
 
@@ -89,4 +90,4 @@ ADD_CUSTOM_COMMAND(
 		COMMENT "Building physx-js-webidl asm.js"
 		VERBATIM
 )
-ADD_CUSTOM_TARGET(PhysXWasmBindingsAsm ALL DEPENDS physx-js-webidl.asm.js)
+ADD_CUSTOM_TARGET(PhysXAsmJsBindings ALL DEPENDS physx-js-webidl.asm.js)
