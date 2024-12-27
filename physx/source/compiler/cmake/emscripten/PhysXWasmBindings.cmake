@@ -17,7 +17,8 @@ SET(PHYSXWASM_IDL_FILE ${PHYSX_WASM_SOURCE_DIR}/wasm/PhysXWasm.idl)
 SET(EMCC_ARGS
 		--post-js glue.js
 		--post-js ${PHYSX_WASM_SOURCE_DIR}/wasm/onload.js
-		-O3
+		-Oz
+		--closure 1
 		-s MODULARIZE=1
 		-s EXPORT_NAME=PhysX
 		-s ENVIRONMENT=web,worker

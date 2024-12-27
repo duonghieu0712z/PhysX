@@ -1,42 +1,27 @@
-/**
- * Makes the API a little less verbose
- */
-Object.defineProperty(Module, 'PHYSICS_VERSION', {
+const PHYSICS_VERSION = 'PHYSICS_VERSION';
+Object.defineProperty(Module, PHYSICS_VERSION, {
   get() {
-    return Module.TopLevelFunctions.prototype.PHYSICS_VERSION;
+    return Module['TopLevelFunctions'].prototype[PHYSICS_VERSION];
   },
 });
 
-// Move TopLevelFunctions to PhysX object
-for (const prop in Module.TopLevelFunctions.prototype) {
-  if (prop !== 'constructor' && !prop.startsWith('get_') && !prop.startsWith('__')) {
-    Object.defineProperty(Module, prop, {
-      get() {
-        return Module.TopLevelFunctions.prototype[prop];
-      },
-    });
-  }
-}
-
-// Move ExtensionFunctions to PhysX object
-for (const prop in Module.ExtensionFunctions.prototype) {
-  if (prop !== 'constructor' && !prop.startsWith('get_') && !prop.startsWith('__')) {
-    Object.defineProperty(Module, prop, {
-      get() {
-        return Module.ExtensionFunctions.prototype[prop];
-      },
-    });
-  }
-}
-
-// Move ArrayHelpers to PhysX object
-for (const prop in Module.ArrayHelpers.prototype) {
-  if (prop !== 'constructor' && !prop.startsWith('get_') && !prop.startsWith('__')) {
-    Object.defineProperty(Module, prop, {
-      get() {
-        return Module.ArrayHelpers.prototype[prop];
-      },
-    });
+const classes = ['TopLevelFunctions', 'ExtensionFunctions', 'ArrayHelpers'];
+for (const name of classes) {
+  const props = Module[name].prototype;
+  for (const prop in props) {
+    if (
+      prop !== 'constructor' &&
+      props[prop] !== props['constructor'] &&
+      props[prop] !== props[`get_${PHYSICS_VERSION}`] &&
+      !prop.startsWith('get_') &&
+      !prop.startsWith('__')
+    ) {
+      Object.defineProperty(Module, prop, {
+        get() {
+          return props[prop];
+        },
+      });
+    }
   }
 }
 
@@ -44,11 +29,12 @@ Module['malloc'] = Module['_webidl_malloc'] = _webidl_malloc;
 Module['free'] = Module['_webidl_free'] = _webidl_free;
 
 function deleteCache(obj, recursive = false) {
-  const caches = Module['getCache'](obj.__class__);
-  if (!caches[obj.ptr]) {
+  const caches = Module['getCache'](Module['getClass'](obj));
+  const ptr = Module['getPointer'](obj);
+  if (!caches[ptr]) {
     return;
   }
-  delete caches[obj.ptr];
+  delete caches[ptr];
 
   if (recursive) {
     for (const prop in obj) {
