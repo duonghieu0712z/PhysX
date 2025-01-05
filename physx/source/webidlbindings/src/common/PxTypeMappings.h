@@ -28,13 +28,13 @@ typedef physx::PxVehicleWheels* PxVehicleWheelsPtr;
 
 // template classes are not supported by webidl binder, as a hack we can use typedefs
 typedef physx::PxFixedSizeLookupTable<physx::PxVehicleEngineData::eMAX_NB_ENGINE_TORQUE_CURVE_ENTRIES> PxEngineTorqueLookupTable;
-typedef physx::PxTypedStridedData<physx::PxU16> PxU16StridedData;
 
 typedef physx::PxOverlapBufferN<10> PxOverlapBuffer10;
 typedef physx::PxRaycastBufferN<10> PxRaycastBuffer10;
 typedef physx::PxSweepBufferN<10> PxSweepBuffer10;
 
 typedef physx::PxTypedStridedData<physx::PxU16> PxTypedStridedData_PxU16;
+typedef physx::PxTypedStridedData<const physx::PxU16> PxTypedStridedData_PxU16Const;
 
 /**
  * PxArrayExt extends PxArray to get a slightly more Java(-script) friendly interface with get() and set() methods.

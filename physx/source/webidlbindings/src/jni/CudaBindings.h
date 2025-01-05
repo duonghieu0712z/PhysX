@@ -8,7 +8,6 @@
 #include "extensions/PxParticleClothCooker.h"
 #include "PxPhysicsAPI.h"
 #include "PxParticleGpu.h"
-#include "PxAttachment.h"
 
 struct PxCudaTopLevelFunctions {
 
