@@ -29,7 +29,21 @@
 
 STRING(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWERCASE)
 
-SET(PHYSX_WARNING_DISABLES "-Wno-invalid-offsetof -Wno-invalid-noreturn -Wno-unused-private-field -Wno-deprecated-copy -Wno-unused-variable -Wno-variadic-macros -Wno-array-bounds -Wno-strict-aliasing -Wno-bitwise-instead-of-logical -Wno-unused-but-set-variable -Wno-unused-parameter")
+SET(PHYSX_WARNING_DISABLES "-Wno-invalid-offsetof \
+    -Wno-invalid-noreturn \
+    -Wno-unused-private-field \
+    -Wno-deprecated-copy \
+    -Wno-unused-variable \
+    -Wno-variadic-macros \
+    -Wno-array-bounds \
+    -Wno-strict-aliasing \
+    -Wno-bitwise-instead-of-logical \
+    -Wno-unused-but-set-variable \
+    -Wno-unused-parameter \
+    -Wno-inconsistent-missing-override \
+    -Wno-inconsistent-missing-destructor-override \
+    -Wno-unused-function \
+")
 
 IF(${ANDROID_ABI} STREQUAL "armeabi-v7a")
 	SET(PHYSX_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wpedantic -std=c++11 -fno-rtti -fno-exceptions -ffunction-sections -fdata-sections -funwind-tables -fomit-frame-pointer -funswitch-loops -finline-limit=300 -fno-strict-aliasing -fstack-protector ${PHYSX_WARNING_DISABLES}" CACHE INTERNAL "PhysX CXX")
