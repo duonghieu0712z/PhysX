@@ -86,6 +86,9 @@ SET(CLANG_WARNINGS "-ferror-limit=0 -Wall -Wextra -Wstrict-aliasing=2 -Weverythi
     -Wno-unused-variable \
     -Wno-switch-default \
     -Wno-invalid-offsetof \
+    -Wno-inconsistent-missing-override \
+    -Wno-inconsistent-missing-destructor-override \
+    -Wno-unused-function \
 ")
 
 # Set to true to enable multi-threading - works but is difficult to use
